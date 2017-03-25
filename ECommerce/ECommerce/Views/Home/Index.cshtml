@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@if (Request.IsAuthenticated)
+{
+    <div class="row" style="padding-top:25px">
+        <div class="col-md-2">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapseCategoria">Categoría</a>
+                        </h4>
+                    </div>
+                    <div id="collapseCategoria" class="panel-collapse collapse">
+                        <div class="panel-body" style="margin-left:10px" id="categorias"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapsePrecio">Precio</a>
+                        </h4>
+                    </div>
+                    <div id="collapsePrecio" class="panel-collapse collapse">
+                        <div class="panel-body" style="margin-left:10px"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            @*<div class="panel panel-default">
+                <div class="panel-heading"><span style="font-weight:bold;">Categoría</span></div>
+                <div class="panel-body" style="margin-left:10px" id="categorias">
+                </div>
+            </div>*@
+        </div>
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="jumbotron text-center col-md-offset-3 col-md-6">
+            <h1>e-commerce</h1>
+            <p class="lead">Bienvenido(a) a e-commerce, para comenzar a vender o comprar debes iniciar sesión.</p>
+            <p>@Html.ActionLink("Inicia sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) o @Html.ActionLink("Regístrate", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</p>
+        </div>
+    </div>
+}
+
+<script>
+    cargarCategorias();
+
+    function cargarCategorias() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Listar","Categoria")',
+            dataType: "html",
+            success: function successFunc(data) {
+                console.log(data);
+                $('#categorias').append(data);
+            },
+            error: function errorFunc(error) {
+                console.log(error)
+                alert('error');
+            }
+        });
+    }
+
+</script>

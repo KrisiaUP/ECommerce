@@ -1,0 +1,16 @@
+﻿@using ECommerce.Models
+@model List<CategoriaViewModel>
+@foreach (var c in Model)
+{
+    <div class="row">
+        @Html.Hidden("Categorias.Index", ("a" + c.Id))
+
+        @Html.HiddenFor(model => c.Id, new { @Name = "Categorias[a" + c.Id + "].Id", @Value = c.Id })
+        @{ var name = "Categorias[a" + c.Id + "].Seleccionada"; }
+        @Html.CheckBoxFor(model => c.Seleccionada, new { @Name = "Categorias[a" + c.Id + "].Seleccionada", @id = "Categorias[a" + c.Id + "].Seleccionada" })
+        @*@Html.DisplayFor(model => c.Categoria)*@
+        <label name="@name" class="control-label" for="@name"><span>@Html.DisplayFor(model => c.Categoria)</span></label>
+
+    </div>
+    
+}
